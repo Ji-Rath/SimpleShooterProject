@@ -3,3 +3,6 @@
 
 #include "SimpleShooterProjectGameModeBase.h"
 
+void ASimpleShooterProjectGameModeBase::PawnKilled(APawn* Pawn)
+{
+}

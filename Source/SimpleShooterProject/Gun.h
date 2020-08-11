@@ -42,4 +42,19 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UParticleSystem* ImpactEffect;
 
+	UPROPERTY(EditDefaultsOnly)
+	float Damage = 10.f;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* MuzzleSound;
+
+	UPROPERTY(EditDefaultsOnly)
+	USoundBase* ImpactSound;
+
+private:
+
+	bool GunTrace(FHitResult& Hit, FVector& ShotDirection);
+
+	AController* GetOwnerController() const;
+
 };

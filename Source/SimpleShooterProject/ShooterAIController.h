@@ -26,4 +26,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	UBehaviorTree* AIBehavior;
+
+	bool IsDead();
 };

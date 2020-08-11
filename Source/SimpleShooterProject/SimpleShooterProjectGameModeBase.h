@@ -14,4 +14,6 @@ class SIMPLESHOOTERPROJECT_API ASimpleShooterProjectGameModeBase : public AGameM
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void PawnKilled(APawn* Pawn);
 };

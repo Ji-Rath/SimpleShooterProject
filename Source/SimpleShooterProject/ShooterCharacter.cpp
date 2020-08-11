@@ -3,6 +3,8 @@
 
 #include "ShooterCharacter.h"
 #include "Gun.h"
+#include "Components/CapsuleComponent.h"
+#include "SimpleShooterProjectGameModeBase.h"
 
 // Sets default values
 AShooterCharacter::AShooterCharacter()
@@ -65,6 +67,11 @@ bool AShooterCharacter::IsDead() const
 	return Health <= 0;
 }
 
+float AShooterCharacter::GetHealthPercent() const
+{
+	return Health/MaxHealth;
+}
+
 void AShooterCharacter::Shoot()
 {
 	if (Gun)
@@ -81,6 +88,18 @@ float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	Health -= DamageApplied;
 
 	UE_LOG(LogTemp, Log, TEXT("Health: %f"), Health);
+
+	if (IsDead())
+	{
+		ASimpleShooterProjectGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ASimpleShooterProjectGameModeBase>();
+		if (GameMode)
+		{
+			GameMode->PawnKilled(this);
+		}
+
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 
 	return DamageApplied;
 }

@@ -4,6 +4,7 @@
 #include "ShooterAIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "ShooterCharacter.h"
 
 void AShooterAIController::BeginPlay()
 {
@@ -22,15 +23,15 @@ void AShooterAIController::BeginPlay()
 void AShooterAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
-	if (LineOfSightTo(PlayerRef))
+bool AShooterAIController::IsDead()
+{
+	AShooterCharacter* ShooterCharacter = Cast<AShooterCharacter>(GetPawn());
+	if (ShooterCharacter)
 	{
-		GetBlackboardComponent()->SetValueAsVector("PlayerLocation", PlayerRef->GetActorLocation());
-		GetBlackboardComponent()->SetValueAsVector("LastPlayerLocation", PlayerRef->GetActorLocation());
+		return ShooterCharacter->IsDead();
 	}
-	else
-	{
-		GetBlackboardComponent()->ClearValue("PlayerLocation");
-	}
+	return true;
 }
 
